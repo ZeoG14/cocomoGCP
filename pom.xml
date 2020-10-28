@@ -18,8 +18,8 @@
   <packaging>war</packaging>
   <version>1.0</version>
 
-  <groupId>com.google.appengine.demos</groupId>
-  <artifactId>appengine-try-java</artifactId>
+  <groupId>gcpcocomo</groupId>
+  <artifactId>cocomo</artifactId>
 
   <!-- Parent POM defines common plugins and properties. -->
   <parent>
@@ -61,34 +61,8 @@
       <artifactId>jstl</artifactId>
       <version>1.2</version>
     </dependency>
-
-    <!-- Test Dependencies -->
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.13-beta-2</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-all</artifactId>
-      <version>1.10.19</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.google.appengine</groupId>
-      <artifactId>appengine-testing</artifactId>
-      <version>${appengine.target.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.google.appengine</groupId>
-      <artifactId>appengine-api-stubs</artifactId>
-      <version>${appengine.target.version}</version>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
-    
+
   <build>
     <outputDirectory>target/${project.artifactId}/WEB-INF/classes</outputDirectory> 
                    

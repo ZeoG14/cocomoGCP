@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="gcpCocomo:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>gcpCocomo</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="cocomo-1.0.war">
+      <element id="artifact" artifact-name="gcpCocomo:war exploded" />
+    </root>
+  </artifact>
+</component>
