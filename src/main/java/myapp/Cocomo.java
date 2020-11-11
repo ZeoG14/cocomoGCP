@@ -16,8 +16,11 @@
 
 package myapp;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.Math;
+import javax.json.*;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +28,9 @@ import javax.servlet.http.HttpServletResponse;
 
 
 public class Cocomo extends HttpServlet {
+  private static FileWriter file;
+  private static String directory = System.getProperty("user.dir");
+  private static String jsObj = directory + File.separator + "jsObj.txt";
 
   public static int mo;
   public static double ef;
@@ -37,6 +43,16 @@ public class Cocomo extends HttpServlet {
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
     String size = req.getParameter("size");
+
+    JsonObject object = Json.createObjectBuilder().add("mode",modeStr(Integer.parseInt(size)))
+            .add("effort", effortStr(Integer.parseInt(size)))
+            .add("time",timeStr()).build();
+
+
+    file = new FileWriter(jsObj);
+    file.write(object.toString());
+    file.flush();
+    file.close();
 
 
     try {
