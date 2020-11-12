@@ -17,4 +17,13 @@
         <servlet-name>Cocomo</servlet-name>
         <url-pattern>/calculateCocomo</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CocomoJson</servlet-name>
+        <servlet-class>myapp.CocomoJson</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CocomoJson</servlet-name>
+        <url-pattern>/api</url-pattern>
+    </servlet-mapping>
 </web-app>

@@ -16,21 +16,16 @@
 
 package myapp;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.lang.Math;
-import javax.json.*;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
+
 public class Cocomo extends HttpServlet {
-  private static FileWriter file;
-  private static String directory = System.getProperty("user.dir");
-  private static String jsObj = directory + File.separator + "jsObj.txt";
 
   public static int mo;
   public static double ef;
@@ -43,16 +38,6 @@ public class Cocomo extends HttpServlet {
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
     String size = req.getParameter("size");
-
-    JsonObject object = Json.createObjectBuilder().add("mode",modeStr(Integer.parseInt(size)))
-            .add("effort", effortStr(Integer.parseInt(size)))
-            .add("time",timeStr()).build();
-
-
-    file = new FileWriter(jsObj);
-    file.write(object.toString());
-    file.flush();
-    file.close();
 
 
     try {
@@ -81,7 +66,7 @@ public class Cocomo extends HttpServlet {
   }
 
 
-  private String modeStr(int size) {
+  public String modeStr(int size) {
     int model = 0;
 
       //Check the mode according to size
@@ -101,20 +86,20 @@ public class Cocomo extends HttpServlet {
 
   }
 
-  private String effortStr(int size) {
+  public String effortStr(int size) {
     double effort = table[mo][0] * Math.pow(size, table[mo][1]);
     Cocomo.ef = effort;
     return "Effort = " + dround(effort) + " Person-Month" + System.lineSeparator();
 
   }
 
-  private String timeStr() {
+  public String timeStr() {
     double time = table[mo][2] * Math.pow(ef, table[mo][3]);
     Cocomo.ti = time;
     return "Development Time = " + dround(time) + " Months" + System.lineSeparator();
   }
 
-  private String staffStr() {
+  public String staffStr() {
     double staff = ef / ti;
     return "Average Staff Required = " + fround(staff) + " Persons" + System.lineSeparator();
   }
@@ -128,14 +113,3 @@ public class Cocomo extends HttpServlet {
   }
 
 }
-
-
-
-
-
-
-
-
-
-
-
