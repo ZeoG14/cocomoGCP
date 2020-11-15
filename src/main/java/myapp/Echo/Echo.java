@@ -1,12 +1,9 @@
 package myapp.echo;
 
-import com.google.api.server.spi.config.AnnotationBoolean;
-import com.google.api.server.spi.config.Api;
-import com.google.api.server.spi.config.ApiIssuer;
-import com.google.api.server.spi.config.ApiMethod;
-import com.google.api.server.spi.config.ApiNamespace;
-import com.google.api.server.spi.config.Named;
-import com.google.api.server.spi.config.Nullable;
+import com.google.api.server.spi.auth.EspAuthenticator;
+import com.google.api.server.spi.auth.common.User;
+import com.google.api.server.spi.config.*;
+import com.google.api.server.spi.response.UnauthorizedException;
 
 
 @Api(
@@ -30,45 +27,35 @@ import com.google.api.server.spi.config.Nullable;
 
 )
 
-
-
 public class Echo {
 
 
-    @ApiMethod(name = "echo")
-    public Message echo(Message message, @Named("n") @Nullable Integer n){
-        return doEcho(message,n);
+    @ApiMethod(name = "echo",httpMethod = ApiMethod.HttpMethod.GET)
+    public Message echo(Message message){
+        return doEcho(message);
     }
 
 
-    @ApiMethod(name = "echo_path_parameter", path = "echo/{n}")
-    public Message echoPathParameter(Message message, @Named("n") int n) {
-        return doEcho(message, n);
+    @ApiMethod(name = "echo_path_parameter", path = "echo/{n}",httpMethod = ApiMethod.HttpMethod.GET)
+    public Message echoPathParameter(Message message) {
+        return doEcho(message);
     }
 
 
 
-    @ApiMethod(name = "echo_api_key", path = "echo_api_key", apiKeyRequired = AnnotationBoolean.TRUE)
-    public Message echoApiKey(Message message, @Named("n") @Nullable Integer n) {
-        return doEcho(message, n);
+    @ApiMethod(name = "echo_api_key", path = "echo_api_key", apiKeyRequired = AnnotationBoolean.TRUE, httpMethod = ApiMethod.HttpMethod.GET)
+    public Message echoApiKey(Message message) {
+        return doEcho(message);
     }
     // [END echo_api_key]
-
-    private Message doEcho(Message request, Integer n) {
+    @ApiMethod(
+            httpMethod = ApiMethod.HttpMethod.GET
+    )
+    private Message doEcho(Message request) {
         Message response = new Message();
-        if (n != null && n >= 0) {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < n; i++) {
-                if (i > 0) {
-                    sb.append(' ');
-                }
-                sb.append(request.getMessage());
-            }
-            response.setMessage(sb.toString());
-        }
+        String s = request.getMessage();
+        response.setMessage(s);
+
         return response;
     }
-
-
-
 }
